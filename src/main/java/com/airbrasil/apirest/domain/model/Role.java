@@ -20,7 +20,7 @@ public class Role {
     @Enumerated(EnumType.STRING)
     private RoleName name;
 
-//    @ToString.Exclude
-//    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-//    private List<User> users;
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    private List<User> users;
 }

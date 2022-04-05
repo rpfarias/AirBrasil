@@ -1,20 +1,18 @@
 package com.airbrasil.apirest.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.validator.constraints.br.CPF;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "tbl_usuario")
+@Entity(name = "tbl_user")
 public class User {
 
     @Id
@@ -24,15 +22,24 @@ public class User {
     @NotBlank(message = "Nome é obrigatório")
     private String name;
 
-    @NotBlank(message = "CPF é obrigatório")
-    @Column(length = 11, unique = true)
-    @CPF
-    private String cpf;
-
     @NotBlank(message = "Email é obrigatório")
     @Column(unique = true)
     @Email
-    private String email;
+    private String username;
 
     private String password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Client> clients;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Reservation> reservations;
+
+    @ToString.Exclude
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "tbl_user_role_rel",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
 }
