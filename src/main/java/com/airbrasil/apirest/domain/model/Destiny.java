@@ -21,6 +21,6 @@ public class Destiny {
 
     private String nameDestiny;
 
-    @ManyToMany(mappedBy = "destinies", fetch = FetchType.LAZY)
-    private List<Reservation> reservations;
+//    @ManyToMany(mappedBy = "destinies", fetch = FetchType.LAZY)
+//    private List<Reservation> reservations;
 }

@@ -23,10 +23,13 @@ public class User {
     private String name;
 
     @NotBlank(message = "Email é obrigatório")
-    @Column(unique = true)
-    @Email
     private String username;
 
+    @Column(nullable = false, unique = true, length = 100)
+    @Email
+    private String email;
+
+    @Column(nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

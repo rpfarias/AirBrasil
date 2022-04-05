@@ -46,13 +46,13 @@ public class Reservation implements Serializable {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-//    @ManyToMany(mappedBy = "reservations", fetch = FetchType.LAZY)
-//    private List<Destiny> destinies;
+//    @ManyToOne(mappedBy = "reservations", fetch = FetchType.LAZY)
+//    private Client client;
 
     @ToString.Exclude
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "tbl_reservation_destiny_rel",
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "tbl_reservation_client_rel",
             joinColumns = @JoinColumn(name = "reservation_id"),
-            inverseJoinColumns = @JoinColumn(name = "destiny_id"))
-    private Set<Destiny> destinies;
+            inverseJoinColumns = @JoinColumn(name = "client_id"))
+    private Client clients;
 }
