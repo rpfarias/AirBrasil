@@ -46,7 +46,6 @@ public class Reservation implements Serializable {
     @Size(min = 3, max = 50)
     private String destiny;
 
-
     @Column(nullable = false)
     private Date dataIda;
 
@@ -55,21 +54,20 @@ public class Reservation implements Serializable {
     @Column(name = "preco", length = 50)
     private BigDecimal price;//essa regra eu jogo lá no serviço?
 
-    @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", updatable = false, insertable = false)
     private Client client;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-//    @ManyToOne(mappedBy = "reservations", fetch = FetchType.LAZY)
-//    private Client client;
+    @Column(name = "client_id")
+    private Long clientId;
 
     @ToString.Exclude
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinTable(name = "tbl_reservation_client_rel",
-            joinColumns = @JoinColumn(name = "reservation_id"),
-            inverseJoinColumns = @JoinColumn(name = "client_id"))
-    private Client clients;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", updatable = false, insertable = false)
+    private User user;
+
+    @Column(name = "user_id")
+    private Long userId;
+
 }
