@@ -28,7 +28,7 @@ public class ClientController {
 
     @ApiOperation(value="Retorna uma Cliente por Id")
     @GetMapping("/client/{id}")
-    public Optional<Client> client(@PathVariable (value = "id") long id) {
+    public Optional<Client> clientById(@PathVariable (value = "id") long id) {
         return clientRepository.findById(id);
     }
 

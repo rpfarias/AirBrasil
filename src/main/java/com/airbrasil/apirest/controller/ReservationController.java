@@ -28,7 +28,7 @@ public class ReservationController {
 
     @ApiOperation(value="Retorna uma Reserva por Id")
     @GetMapping("/reservation/{id}")
-    public Optional<Reservation> reservation(@PathVariable(value = "id") long id) {
+    public Optional<Reservation> reservationById(@PathVariable(value = "id") long id) {
         return reservationRepository.findById(id);
     }
 

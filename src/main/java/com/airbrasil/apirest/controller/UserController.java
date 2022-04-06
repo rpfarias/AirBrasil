@@ -27,7 +27,7 @@ public class UserController {
 
     @ApiOperation(value="Retorna um Usuário por Id")
     @GetMapping("/user/{id}")
-    public User user(@PathVariable (value = "id") long id) {
+    public User userById(@PathVariable (value = "id") long id) {
         return userRepository.findById(id);
     }
 
