@@ -4,6 +4,7 @@ import com.airbrasil.apirest.enums.RoleName;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Getter
@@ -18,6 +19,7 @@ public class Role {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "nome", length = 50)
     private RoleName name;
 
     @ToString.Exclude

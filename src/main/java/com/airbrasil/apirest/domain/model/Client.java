@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -22,6 +23,9 @@ public class Client implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Nome é obrigatório")
+    @Column(name = "nome", length = 50)
+    @Size(min = 3, max = 50)
     private String name;
 
     @NotBlank(message = "CPF é obrigatório")
