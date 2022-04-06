@@ -1,9 +1,6 @@
 package com.airbrasil.apirest.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
@@ -24,7 +21,7 @@ public class Client implements Serializable {
     private Long id;
 
     @NotBlank(message = "Nome é obrigatório")
-    @Column(name = "nome", length = 50)
+    @Column(length = 50)
     @Size(min = 3, max = 50)
     private String name;
 
@@ -33,13 +30,7 @@ public class Client implements Serializable {
     @CPF
     private String cpf;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", updatable = false, insertable = false)
-    private User user;
-
-    @Column(name = "user_id")
-    private Long userId;
-
+    @ToString.Exclude
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private List<Reservation> reservations;
 }

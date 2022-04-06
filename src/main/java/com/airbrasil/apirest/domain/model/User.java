@@ -1,5 +1,6 @@
 package com.airbrasil.apirest.domain.model;
 
+import com.airbrasil.apirest.enums.RoleName;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,24 +20,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Nome é obrigatório")
-    private String name;
-
     @NotBlank(message = "Email é obrigatório")
+    @Column(length = 100, unique = true)
     private String username;
 
-    @Column(nullable = false, unique = true, length = 100)
-    @Email
-    private String email;
-
-    @Column(nullable = false)
+    @ToString.Exclude
+    @Column(length = 100, nullable = false)
     private String password;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Client> clients;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Reservation> reservations;
 
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER)
@@ -44,5 +34,4 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-
 }
