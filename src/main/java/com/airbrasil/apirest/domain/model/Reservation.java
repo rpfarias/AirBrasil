@@ -53,8 +53,6 @@ public class Reservation implements Serializable {
 
     private Date dataVolta;
 
-    private BigDecimal price;//essa regra eu jogo lá no serviço?
-
     @Column(name = "user_id")
     private Long userId;
 

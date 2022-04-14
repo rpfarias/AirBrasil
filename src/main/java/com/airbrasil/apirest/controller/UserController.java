@@ -4,6 +4,8 @@ import com.airbrasil.apirest.repository.UserRepository;
 import com.airbrasil.apirest.domain.model.User;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 

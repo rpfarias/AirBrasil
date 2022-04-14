@@ -1,6 +1,5 @@
 package com.airbrasil.apirest.controller;
 
-import com.airbrasil.apirest.domain.model.Client;
 import com.airbrasil.apirest.domain.model.Destiny;
 import com.airbrasil.apirest.repository.DestinyRepository;
 import io.swagger.annotations.Api;
