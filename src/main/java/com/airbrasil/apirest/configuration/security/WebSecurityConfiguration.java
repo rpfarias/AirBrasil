@@ -1,12 +1,13 @@
 package com.airbrasil.apirest.configuration.security;
 
-import org.springframework.http.HttpMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -32,6 +33,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) {
+        web.ignoring()
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .antMatchers("/swagger-ui/index.html", "/v2/api-docs", "/swagger-resources/**", "/webjars/**", "/static/**");
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().disable();
         http.csrf().disable();
@@ -40,7 +48,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/clients/**").hasRole("ADMIN")
+/*                .antMatchers(HttpMethod.GET, "/api/clients/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/client/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/client/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/client/**").hasRole("ADMIN")
@@ -72,12 +80,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/destinies/**").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/api/destiny/**").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/api/reservation/**").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "/api/reservation/**").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/api/user/**").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "/api/user/**").hasRole("USER")
-                .antMatchers(HttpMethod.PUT, "/api/user/**").hasRole("USER")
-                .anyRequest().authenticated()
-                .and().formLogin()
+                .antMatchers(HttpMethod.POST, "/api/reservation/**").hasRole("USER")*/
+                .antMatchers("/api/users/**").permitAll()
+                .anyRequest().permitAll()
                 .and().httpBasic();
     }
 }
