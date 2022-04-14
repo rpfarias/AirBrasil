@@ -26,10 +26,11 @@ public class Reservation implements Serializable {
     private Long id;
 
     @NotBlank(message = "Nome do passageiro é obrigatório")
-    @Column(name = "nome_passageiro", length = 50)
+    @Column(length = 50)
     @Size(min = 3, max = 50)
     private String passager;
 
+    @Enumerated(EnumType.STRING)
     private Status status;// criar uma reserva, tem que ter o status? Se sim, ja pode ter um status pré definido?
     //essa regra eu jogo lá no serviço?
 
@@ -38,36 +39,25 @@ public class Reservation implements Serializable {
     private int quantidadePassageiros;
 
     @NotBlank(message = "Informe uma origem")
-    @Column(name = "origem", length = 50)
+    @Column(length = 50)
     @Size(min = 3, max = 50)
     private String origin;
 
-    @Column(name = "destino", length = 50)
+    @Column(length = 50)
     @Size(min = 3, max = 50)
     private String destiny;
+
 
     @Column(nullable = false)
     private Date dataIda;
 
     private Date dataVolta;
 
-    @Column(name = "preco", length = 50)
-    private BigDecimal price;//essa regra eu jogo lá no serviço?
+    @Column(name = "user_id")
+    private Long userId;
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", updatable = false, insertable = false)
     private Client client;
-
-    @Column(name = "client_id")
-    private Long clientId;
-
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", updatable = false, insertable = false)
-    private User user;
-
-    @Column(name = "user_id")
-    private Long userId;
-
 }

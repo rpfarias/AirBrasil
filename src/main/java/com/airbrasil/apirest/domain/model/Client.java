@@ -21,7 +21,7 @@ public class Client implements Serializable {
     private Long id;
 
     @NotBlank(message = "Nome é obrigatório")
-    @Column(name = "nome", length = 50)
+    @Column(length = 50)
     @Size(min = 3, max = 50)
     private String name;
 
@@ -29,13 +29,6 @@ public class Client implements Serializable {
     @Column(length = 11, unique = true)
     @CPF
     private String cpf;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", updatable = false, insertable = false)
-    private User user;
-
-    @Column(name = "user_id")
-    private Long userId;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)

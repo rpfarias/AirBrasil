@@ -28,25 +28,25 @@ public class ClientController {
 
     @ApiOperation(value="Retorna uma Cliente por Id")
     @GetMapping("/client/{id}")
-    public Optional<Client> client(@PathVariable (value = "id") long id) {
+    public Optional<Client> clientById(@PathVariable (value = "id") long id) {
         return clientRepository.findById(id);
     }
 
     @ApiOperation(value="Cria um Cliente")
     @PostMapping("/client")
-    public Client saveClient(@RequestBody @Valid Client client) {
+    public Client save(@RequestBody @Valid Client client) {
         return clientRepository.save(client);
     }
 
     @ApiOperation(value="Atualiza um Cliente")
     @PutMapping("/client")
-    public Client updateClient(@RequestBody @Valid Client client) {
+    public Client update(@RequestBody @Valid Client client) {
         return clientRepository.save(client);
     }
 
     @ApiOperation(value="Deleta um Cliente")
     @DeleteMapping("/client")
-    public void deleteClient(@RequestBody @Valid Client client) {
-        clientRepository.delete(client);
+    public void delete(@PathVariable Long id) {
+        clientRepository.deleteById(id);
     }
 }

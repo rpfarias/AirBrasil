@@ -4,6 +4,8 @@ import com.airbrasil.apirest.repository.UserRepository;
 import com.airbrasil.apirest.domain.model.User;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 
@@ -27,7 +29,7 @@ public class UserController {
 
     @ApiOperation(value="Retorna um Usuário por Id")
     @GetMapping("/user/{id}")
-    public User user(@PathVariable (value = "id") long id) {
+    public User userById(@PathVariable (value = "id") long id) {
         return userRepository.findById(id);
     }
 
