@@ -1,6 +1,7 @@
 package com.airbrasil.apirest.controller;
 
 import com.airbrasil.apirest.domain.model.User;
+import com.airbrasil.apirest.domain.request.UserRequest;
 import com.airbrasil.apirest.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,8 +38,8 @@ public class UserController {
 
     @ApiOperation(value = "Cria um Usuário")
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.save(user);
+    public User createUser(@RequestBody UserRequest user) {
+        return userService.createUser(user);
     }
 
     @ApiOperation(value = "Atualiza um Usuário")

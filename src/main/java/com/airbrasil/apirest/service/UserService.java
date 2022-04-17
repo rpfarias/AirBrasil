@@ -1,26 +1,26 @@
 package com.airbrasil.apirest.service;
 
-import com.airbrasil.apirest.domain.model.Role;
 import com.airbrasil.apirest.domain.model.User;
 import com.airbrasil.apirest.domain.request.UserRequest;
+import com.airbrasil.apirest.enums.RoleName;
+import com.airbrasil.apirest.repository.RoleRepository;
 import com.airbrasil.apirest.repository.UserRepository;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserService {
 
-    final UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public List<User> findAll() {
@@ -35,11 +35,10 @@ public class UserService {
         String encoded = new BCryptPasswordEncoder().encode(request.getPassword());
 
         User user = new User();
-        user.setUsername(request.getUsername());
+        user.setUsername(request.getUsername().toLowerCase().trim());
         user.setPassword(encoded);
-//        user.setRoles((Set<Role>) request.getRoles());
-        // 1 - encode no password
-        // 2 - relacionar usuario com ROLE_USER
+        var role = roleRepository.findByName(RoleName.ROLE_USER);
+        role.ifPresent(value -> user.getRoles().add(value));
         return userRepository.save(user);
     }
 
