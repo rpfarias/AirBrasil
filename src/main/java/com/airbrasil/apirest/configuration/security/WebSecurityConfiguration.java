@@ -48,7 +48,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-/*                .antMatchers(HttpMethod.GET, "/api/clients/**").hasRole("ADMIN")
+                /*.antMatchers(HttpMethod.GET, "/api/clients/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/client/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/client/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/client/**").hasRole("ADMIN")
@@ -80,7 +80,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/destinies/**").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/api/destiny/**").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/api/reservation/**").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "/api/reservation/**").hasRole("USER")*/
+                .antMatchers(HttpMethod.POST, "/api/reservation/**").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/api/users").hasAnyRole()*/
                 .antMatchers("/api/users/**").permitAll()
                 .anyRequest().permitAll()
                 .and().httpBasic();

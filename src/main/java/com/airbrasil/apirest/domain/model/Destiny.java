@@ -19,7 +19,7 @@ public class Destiny {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(name = "destinos", nullable = false, unique = true, length = 50)
     @Size(min = 3, max = 50)
     private String nameDestiny;
 }

@@ -1,13 +1,11 @@
 package com.airbrasil.apirest.controller;
 
 import com.airbrasil.apirest.domain.model.User;
-import com.airbrasil.apirest.domain.request.UserRequest;
-import com.airbrasil.apirest.repository.UserRepository;
+import com.airbrasil.apirest.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,42 +17,39 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    UserRepository userRepository;
+    final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @ApiOperation(value = "Retorna uma lista de Usuários")
     @GetMapping
     public List<User> listUser() {
-        return userRepository.findAll();
+        return userService.findAll();
     }
 
     @ApiOperation(value = "Retorna um Usuário por Id")
     @GetMapping("/{id}")
     public User userById(@PathVariable(value = "id") long id) {
-        return userRepository.findById(id);
+        return userService.findById(id);
     }
 
     @ApiOperation(value = "Cria um Usuário")
     @PostMapping
-    public User saveUser(@RequestBody @Valid UserRequest request) {
-        String encoded = new BCryptPasswordEncoder().encode(request.getPassword());
-
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(encoded);
-        // 1 - encode no password
-        // 2 - relacionar usuario com ROLE_USER
-        return userRepository.save(user);
+    public User createUser(@RequestBody User user) {
+        return userService.save(user);
     }
 
     @ApiOperation(value = "Atualiza um Usuário")
     @PutMapping
-    public User updateUser(@RequestBody User user) {
-        return userRepository.save(user);
+    public User updateUser(@RequestBody @Valid User user) {
+        return userService.save(user);
     }
 
     @ApiOperation(value = "Deleta um Usuário")
     @DeleteMapping
-    public void deleteUser(@RequestBody User user) {
-        userRepository.delete(user);
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteById(id);
     }
 }

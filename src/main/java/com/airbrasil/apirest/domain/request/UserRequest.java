@@ -1,5 +1,6 @@
 package com.airbrasil.apirest.domain.request;
 
+import com.airbrasil.apirest.domain.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,7 @@ public class UserRequest {
 
     @Column(length = 100, nullable = false)
     private String password;
+
+//    @Column(nullable = false)
+//    private Role roles;
 }

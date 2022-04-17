@@ -1,13 +1,12 @@
 package com.airbrasil.apirest.domain.model;
 
 import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Setter
 @Getter
 @Entity
 public class Ticket {
@@ -16,9 +15,12 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
 
-    private String origem;
+    @Column(name = "origem")
+    private String origin;
 
-    private String destino;
+    @Column(name = "destino")
+    private String destiny;
 
-    private BigDecimal preco;
+    @Column(name = "preco")
+    private BigDecimal price;
 }

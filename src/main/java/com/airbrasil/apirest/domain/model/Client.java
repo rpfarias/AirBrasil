@@ -14,14 +14,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "tbl_cliente")
-public class Client implements Serializable {
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "Nome é obrigatório")
-    @Column(length = 50)
+    @Column(name = "nome", length = 50)
     @Size(min = 3, max = 50)
     private String name;
 

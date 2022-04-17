@@ -1,6 +1,5 @@
 package com.airbrasil.apirest.domain.model;
 
-import com.airbrasil.apirest.enums.RoleName;
 import com.airbrasil.apirest.enums.Status;
 import lombok.*;
 
@@ -8,25 +7,21 @@ import javax.persistence.*;
 import javax.validation.constraints.NegativeOrZero;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "tbl_reserva")
-public class Reservation implements Serializable {
+public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "Nome do passageiro é obrigatório")
-    @Column(length = 50)
+    @Column(name = "passageiro", length = 50)
     @Size(min = 3, max = 50)
     private String passager;
 
@@ -36,14 +31,14 @@ public class Reservation implements Serializable {
 
     @NegativeOrZero(message = "Informe pelo menos um passageiro")
     @Size(min = 1, max = 350)
-    private int quantidadePassageiros;
+    private Long quantidadePassageiros;
 
     @NotBlank(message = "Informe uma origem")
-    @Column(length = 50)
+    @Column(name = "origem", length = 50)
     @Size(min = 3, max = 50)
     private String origin;
 
-    @Column(length = 50)
+    @Column(name = "destino", length = 50)
     @Size(min = 3, max = 50)
     private String destiny;
 

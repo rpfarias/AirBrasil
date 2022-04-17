@@ -4,12 +4,12 @@ import com.airbrasil.apirest.domain.model.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
-    Optional<Ticket> findByDestino(String destiny);
-    Optional<Ticket> findByOrigem(String origin);
+    List<Ticket> findByDestiny(String destiny);
+    List<Ticket> findByOrigin(String origin);
 
 //    Optional<Ticket> findAllByOrigemAndDestino(String from, String to);
 //    Optional<Ticket> findAllByOrigemAfterAndDestino(String from, String to);
