@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/users")
@@ -32,8 +33,14 @@ public class UserController {
 
     @ApiOperation(value = "Retorna um Usuário por Id")
     @GetMapping("/{id}")
-    public User userById(@PathVariable(value = "id") long id) {
+    public Optional<User> findById(@PathVariable long id) {
         return userService.findById(id);
+    }
+
+    @ApiOperation(value = "Retorna um Usuário por CPF")
+    @GetMapping("/cpf/{cpf}")
+    public Optional<User> findByCpf(@PathVariable String cpf) {
+        return userService.findByCpf(cpf);
     }
 
     @ApiOperation(value = "Cria um Usuário")
@@ -50,7 +57,7 @@ public class UserController {
 
     @ApiOperation(value = "Deleta um Usuário")
     @DeleteMapping
-    public void deleteUser(@PathVariable Long id) {
+    public void deleteById(@PathVariable Long id) {
         userService.deleteById(id);
     }
 }
