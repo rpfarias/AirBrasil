@@ -1,18 +1,15 @@
 package com.airbrasil.apirest.service;
 
 import com.airbrasil.apirest.domain.model.User;
-import com.airbrasil.apirest.domain.request.CreateUserRequest;
-import com.airbrasil.apirest.domain.request.UpdateUserRequest;
+import com.airbrasil.apirest.domain.request.UserRequest;
 import com.airbrasil.apirest.enums.RoleName;
 import com.airbrasil.apirest.repository.RoleRepository;
 import com.airbrasil.apirest.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -30,17 +27,17 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findById(@PathVariable long id) {
+    public User findById(long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User { %s } not found.", id)));
     }
 
-    public User findByCpf(@PathVariable String cpf) {
+    public User findByCpf(String cpf) {
         return userRepository.findByCpf(cpf)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User { %s } not found.", cpf)));
     }
 
-    public User createUser(@RequestBody @Valid CreateUserRequest request) {
+    public User createUser(UserRequest request) {
         String encoded = new BCryptPasswordEncoder().encode(request.getPassword());
 
         User user = new User();
@@ -54,11 +51,16 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User update(@RequestBody @Valid User user) {
-        return userRepository.save(user);
+    public User update(UserRequest request, Long id) {
+        User oldUser = userRepository.getById(id);
+        oldUser.setUsername(request.getUsername());
+        oldUser.setPassword(new BCryptPasswordEncoder().encode(request.getPassword()));
+        oldUser.setCpf(request.getCpf());
+        oldUser.setName(request.getName());
+        return userRepository.save(oldUser);
     }
 
-    public void deleteById(@PathVariable Long id) {
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 }

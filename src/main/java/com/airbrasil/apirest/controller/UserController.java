@@ -1,8 +1,7 @@
 package com.airbrasil.apirest.controller;
 
 import com.airbrasil.apirest.domain.model.User;
-import com.airbrasil.apirest.domain.request.CreateUserRequest;
-import com.airbrasil.apirest.domain.request.UpdateUserRequest;
+import com.airbrasil.apirest.domain.request.UserRequest;
 import com.airbrasil.apirest.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/users")
-@Api(value = "API REST User", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(value = "API REST User", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class UserController {
 
     @Autowired
@@ -45,14 +44,14 @@ public class UserController {
 
     @ApiOperation(value = "Cria um Usuário")
     @PostMapping
-    public User createUser(@RequestBody CreateUserRequest user) {
+    public User createUser(@RequestBody UserRequest user) {
         return userService.createUser(user);
     }
 
     @ApiOperation(value = "Atualiza um Usuário")
-    @PutMapping
-    public User updateUser(@RequestBody @Valid User user) {
-        return userService.update(user);
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody @Valid UserRequest userRequest) {
+        return userService.update(userRequest, id);
     }
 
     @ApiOperation(value = "Deleta um Usuário")

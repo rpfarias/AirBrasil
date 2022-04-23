@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
@@ -16,7 +17,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateTicketRequest {
+public class TicketUpdateRequest {
 
     @Column(name = "origem")
     private String origin;
@@ -29,6 +30,11 @@ public class CreateTicketRequest {
     @Size(min = 3, max = 50)
     private String passager;
 
+    @NotBlank(message = "CPF é obrigatório")
+    @Column(length = 11)
+    @CPF
+    private String cpf;
+
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(nullable = false)
     private Date dataIda;
@@ -38,7 +44,4 @@ public class CreateTicketRequest {
 
     @Column(name = "preco")
     private BigDecimal price;
-
-    @Column(name = "user_id")
-    private Long userId;
 }

@@ -1,8 +1,8 @@
 package com.airbrasil.apirest.controller;
 
 import com.airbrasil.apirest.domain.model.Ticket;
-import com.airbrasil.apirest.domain.request.CreateTicketRequest;
-import com.airbrasil.apirest.domain.request.UpdateTicketRequest;
+import com.airbrasil.apirest.domain.request.TicketRequest;
+import com.airbrasil.apirest.domain.request.TicketUpdateRequest;
 import com.airbrasil.apirest.service.TicketService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,9 +21,6 @@ public class TicketController {
     @Autowired
     private final TicketService ticketService;
 
-    private String destiny;
-    private String origin;
-
     public TicketController(TicketService ticketService) {
         this.ticketService = ticketService;
     }
@@ -32,6 +29,12 @@ public class TicketController {
     @GetMapping
     public List<Ticket> listTicket() {
         return ticketService.findAll();
+    }
+
+    @ApiOperation(value = "Retorna um Usuário por CPF")
+    @GetMapping("/cpf/{cpf}")
+    public List<Ticket> ticketByCpf(@PathVariable String cpf) {
+        return ticketService.ticketByCpf(cpf);
     }
 
     @ApiOperation(value="Retorna uma lista de passagens por destino")
@@ -54,14 +57,14 @@ public class TicketController {
 
     @ApiOperation(value = "Cria uma Passagem")
     @PostMapping
-    public Ticket create(@RequestBody @Valid CreateTicketRequest ticket) {
+    public Ticket create(@RequestBody @Valid TicketRequest ticket) {
         return ticketService.create(ticket);
     }
 
     @ApiOperation(value = "Altera uma Passagem")
-    @PutMapping
-    public Ticket update(@RequestBody @Valid Ticket ticket) {
-        return ticketService.update(ticket);
+    @PutMapping("/{id}")
+    public Ticket update(@PathVariable Long id, @RequestBody @Valid TicketUpdateRequest ticketUpdateRequest) {
+        return ticketService.update(ticketUpdateRequest, id);
     }
 
     @ApiOperation(value = "Deleta uma Passagem por Id")

@@ -2,6 +2,7 @@ package com.airbrasil.apirest.domain.model;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -24,6 +25,10 @@ public class Ticket {
     @Column(name = "passageiro")
     @Size(min = 3, max = 50)
     private String passager;
+
+    @NotBlank(message = "CPF é obrigatório")
+    @Column(length = 11)
+    private String cpf;
 
     @Column(name = "origem")
     private String origin;

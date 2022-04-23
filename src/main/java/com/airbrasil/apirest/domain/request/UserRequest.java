@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateUserRequest {
+public class UserRequest {
 
     @Email(message = "Email é obrigatório")
     @Column(length = 100, unique = true)

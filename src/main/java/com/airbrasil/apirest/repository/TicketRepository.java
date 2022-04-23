@@ -11,4 +11,5 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> findByDestiny(String destiny);
     List<Ticket> findByOrigin(String origin);
     List<Ticket> findByPassager(String passager);
+    List<Ticket> findByCpf(String cpf);
 }
