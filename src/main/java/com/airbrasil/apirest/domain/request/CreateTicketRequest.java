@@ -1,23 +1,22 @@
 package com.airbrasil.apirest.domain.request;
 
-import com.airbrasil.apirest.enums.StatusVoo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TicketRequest {
+public class CreateTicketRequest {
 
     @Column(name = "origem")
     private String origin;
@@ -30,11 +29,16 @@ public class TicketRequest {
     @Size(min = 3, max = 50)
     private String passager;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(nullable = false)
     private Date dataIda;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dataVolta;
 
-    @Enumerated(EnumType.STRING)
-    private StatusVoo statusVoo;
+    @Column(name = "preco")
+    private BigDecimal price;
+
+    @Column(name = "user_id")
+    private Long userId;
 }

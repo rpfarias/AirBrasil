@@ -1,6 +1,9 @@
 package com.airbrasil.apirest.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -9,6 +12,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -40,17 +44,10 @@ public class User {
     @Size(min = 3, max = 50)
     private String name;
 
-//    @ToString.Exclude
-//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//    private List<Ticket> tickets;
-
-    @JsonManagedReference
     @ToString.Exclude
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "tbl_user_ticket_rel",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "ticket_id"))
-    private Set<Ticket> tickets = new HashSet<>();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Ticket> tickets;
 
     @JsonManagedReference
     @ToString.Exclude

@@ -1,9 +1,8 @@
 package com.airbrasil.apirest.service;
 
 import com.airbrasil.apirest.domain.model.Ticket;
-import com.airbrasil.apirest.domain.request.TicketRequest;
-import com.airbrasil.apirest.enums.StatusVoo;
-import com.airbrasil.apirest.repository.StatusRepository;
+import com.airbrasil.apirest.domain.request.CreateTicketRequest;
+import com.airbrasil.apirest.domain.request.UpdateTicketRequest;
 import com.airbrasil.apirest.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +14,9 @@ import java.util.List;
 public class TicketService {
 
     private final TicketRepository ticketRepository;
-    private final StatusRepository statusRepository;
 
-    public TicketService(TicketRepository ticketRepository, StatusRepository statusRepository) {
+    public TicketService(TicketRepository ticketRepository) {
         this.ticketRepository = ticketRepository;
-        this.statusRepository = statusRepository;
     }
 
     public List<Ticket> findAll() {
@@ -34,17 +31,20 @@ public class TicketService {
         return ticketRepository.findByOrigin(origin);
     }
 
-    public Ticket create(@RequestBody @Valid TicketRequest request) {
+    public List<Ticket> findAllByPassager(@PathVariable String passager) {
+        return ticketRepository.findByPassager(passager);
+    }
+
+    public Ticket create(@RequestBody @Valid CreateTicketRequest request) {
 
         Ticket ticket = new Ticket();
+        ticket.setPassager(request.getPassager());
         ticket.setOrigin(request.getOrigin());
         ticket.setDestiny(request.getDestiny());
-        ticket.setPassager(request.getPassager());
+        ticket.setPrice(request.getPrice());
         ticket.setDataIda(request.getDataIda());
         ticket.setDataVolta(request.getDataVolta());
-        var status = statusRepository.findByStatus(StatusVoo.AGUARDANDO_STATUS_DO_VOO);
-        status.ifPresent(value -> ticket.getStatusVoo().add(value));
-
+        ticket.setUserId(request.getUserId());
         return ticketRepository.save(ticket);
     }
 
@@ -52,7 +52,7 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
-    public void deleteById(@PathVariable Long id) {
+    public void deleteById(@PathVariable ("id") Long id) {
         ticketRepository.deleteById(id);
     }
 }

@@ -1,7 +1,8 @@
 package com.airbrasil.apirest.controller;
 
 import com.airbrasil.apirest.domain.model.User;
-import com.airbrasil.apirest.domain.request.UserRequest;
+import com.airbrasil.apirest.domain.request.CreateUserRequest;
+import com.airbrasil.apirest.domain.request.UpdateUserRequest;
 import com.airbrasil.apirest.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/users")
@@ -33,30 +33,30 @@ public class UserController {
 
     @ApiOperation(value = "Retorna um Usuário por Id")
     @GetMapping("/{id}")
-    public Optional<User> findById(@PathVariable long id) {
+    public User findById(@PathVariable long id) {
         return userService.findById(id);
     }
 
     @ApiOperation(value = "Retorna um Usuário por CPF")
     @GetMapping("/cpf/{cpf}")
-    public Optional<User> findByCpf(@PathVariable String cpf) {
+    public User findByCpf(@PathVariable String cpf) {
         return userService.findByCpf(cpf);
     }
 
     @ApiOperation(value = "Cria um Usuário")
     @PostMapping
-    public User createUser(@RequestBody UserRequest user) {
+    public User createUser(@RequestBody CreateUserRequest user) {
         return userService.createUser(user);
     }
 
     @ApiOperation(value = "Atualiza um Usuário")
     @PutMapping
     public User updateUser(@RequestBody @Valid User user) {
-        return userService.save(user);
+        return userService.update(user);
     }
 
     @ApiOperation(value = "Deleta um Usuário")
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         userService.deleteById(id);
     }

@@ -10,7 +10,5 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> findByDestiny(String destiny);
     List<Ticket> findByOrigin(String origin);
-
-//    Optional<Ticket> findAllByOrigemAndDestino(String from, String to);
-//    Optional<Ticket> findAllByOrigemAfterAndDestino(String from, String to);
+    List<Ticket> findByPassager(String passager);
 }
