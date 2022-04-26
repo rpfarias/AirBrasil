@@ -31,7 +31,13 @@ public class TicketController {
         return ticketService.findAll();
     }
 
-    @ApiOperation(value = "Retorna um Usuário por CPF")
+    @ApiOperation(value = "Retorna uma lista de Ticket por UserId")
+    @GetMapping("/userId/{userId}")
+    public List<Ticket> findByUserId(@PathVariable Long userId) {
+        return ticketService.findByUserId(userId);
+    }
+
+    @ApiOperation(value = "Retorna um Ticket por CPF")
     @GetMapping("/cpf/{cpf}")
     public List<Ticket> ticketByCpf(@PathVariable String cpf) {
         return ticketService.ticketByCpf(cpf);
@@ -49,7 +55,7 @@ public class TicketController {
         return ticketService.findByOrigin(origin);
     }
 
-    @ApiOperation(value="Retorna passagens por nome no Passageiro")
+    @ApiOperation(value="Retorna passagens por nome do Passageiro")
     @GetMapping("/passager/{passager}")
     public List<Ticket> findAllByPassager(@PathVariable String passager) {
         return ticketService.findAllByPassager(passager);

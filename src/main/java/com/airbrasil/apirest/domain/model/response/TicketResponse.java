@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class TicketResponse {

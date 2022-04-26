@@ -44,4 +44,7 @@ public class TicketUpdateRequest {
 
     @Column(name = "preco")
     private BigDecimal price;
+
+    @Column(name = "user_id")
+    private Long userId;
 }

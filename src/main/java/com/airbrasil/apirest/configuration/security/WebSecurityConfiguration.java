@@ -50,21 +50,27 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/users").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/tickets").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/users/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/api/users/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/api/users/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/users/cpf/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/tickets/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/tickets/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/api/tickets/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/api/tickets").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/tickets/**").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "/api/tickets").hasRole("USER")
-                .antMatchers(HttpMethod.DELETE, "/api/tickets").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/api/tickets/origin").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/api/tickets/destiny").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/api/tickets/passager").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/api/tickets/cpf").hasRole("USER")
+
+                .antMatchers(HttpMethod.GET, "/api/users/**").hasAnyRole("ADMIN", "THANOS")
+                .antMatchers(HttpMethod.PUT, "/api/users/**").hasAnyRole("ADMIN", "THANOS")
+                .antMatchers(HttpMethod.DELETE, "/api/users/id").hasRole("THANOS")
+
+                .antMatchers(HttpMethod.POST, "/api/roles/**").hasRole("THANOS")
+                .antMatchers(HttpMethod.PUT, "/api/roles/**").hasRole("THANOS")
+                .antMatchers(HttpMethod.GET, "/api/roles/**").hasAnyRole("ADMIN", "THANOS")
+                .antMatchers(HttpMethod.DELETE, "/api/roles/id").hasRole("THANOS")
+
+                .antMatchers(HttpMethod.POST, "/api/tickets").hasAnyRole("ADMIN", "USER", "THANOS")
+                .antMatchers(HttpMethod.GET, "/api/tickets/**").hasAnyRole("ADMIN", "THANOS")
+                .antMatchers(HttpMethod.GET, "/api/tickets").hasRole("USER")
+                .antMatchers(HttpMethod.PUT, "/api/tickets/**").hasAnyRole("ADMIN", "THANOS")
+                .antMatchers(HttpMethod.DELETE, "/api/tickets").hasAnyRole("ADMIN", "USER", "THANOS")
+
+//                .antMatchers(HttpMethod.GET, "/api/tickets/origin").hasRole("USER")
+//                .antMatchers(HttpMethod.GET, "/api/tickets/destiny").hasRole("USER")
+//                .antMatchers(HttpMethod.GET, "/api/tickets/passager").hasRole("USER")
+//                .antMatchers(HttpMethod.GET, "/api/tickets/cpf").hasRole("USER")
+                .anyRequest().authenticated()
                 .and().httpBasic();
     }
 }

@@ -27,7 +27,8 @@ public class Ticket {
     private String passager;
 
     @NotBlank(message = "CPF é obrigatório")
-    @Column(length = 11)
+    @Column(length = 11, unique = true)
+    @CPF
     private String cpf;
 
     @Column(name = "origem")

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -29,26 +30,29 @@ public class UserService {
 
     public User findById(long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User { %s } not found.", id)));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User { %s } not found ID.", id)));
     }
 
     public User findByCpf(String cpf) {
         return userRepository.findByCpf(cpf)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User { %s } not found.", cpf)));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User { %s } not found CPF.", cpf)));
     }
 
     public User createUser(UserRequest request) {
-        String encoded = new BCryptPasswordEncoder().encode(request.getPassword());
+        Optional<User> userVerificador = userRepository.findByCpf(request.getCpf());
+        if (!userVerificador.isPresent()) {
+            String encoded = new BCryptPasswordEncoder().encode(request.getPassword());
 
-        User user = new User();
-        user.setUsername(request.getUsername().toLowerCase().trim());
-        user.setPassword(encoded);
-        user.setCpf(request.getCpf().trim());
-        user.setName(request.getName());
-        var role = roleRepository.findByName(RoleName.ROLE_USER);
-        role.ifPresent(value -> user.getRoles().add(value));
-
-        return userRepository.save(user);
+            User user = new User();
+            user.setUsername(request.getUsername().toLowerCase().trim());
+            user.setPassword(encoded);
+            user.setCpf(request.getCpf().trim());
+            user.setName(request.getName());
+            var role = roleRepository.findByName(RoleName.ROLE_USER);
+            role.ifPresent(value -> user.getRoles().add(value));
+            return userRepository.save(user);
+        } else
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("CPF { %s } já cadastrado.", request.getCpf()));
     }
 
     public User update(UserRequest request, Long id) {

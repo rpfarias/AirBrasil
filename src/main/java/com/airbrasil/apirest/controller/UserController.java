@@ -6,7 +6,9 @@ import com.airbrasil.apirest.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -14,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/users")
-@Api(value = "API REST User", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@Api(value = "API REST User", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
     @Autowired
@@ -44,8 +46,9 @@ public class UserController {
 
     @ApiOperation(value = "Cria um Usuário")
     @PostMapping
-    public User createUser(@RequestBody UserRequest user) {
-        return userService.createUser(user);
+    public ResponseEntity createUser(@RequestBody UserRequest user) {
+        userService.createUser(user);
+        return ResponseEntity.ok().body("User criado com sucesso");
     }
 
     @ApiOperation(value = "Atualiza um Usuário")

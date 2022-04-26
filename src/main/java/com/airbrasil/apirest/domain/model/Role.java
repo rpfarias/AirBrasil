@@ -2,6 +2,7 @@ package com.airbrasil.apirest.domain.model;
 
 import com.airbrasil.apirest.enums.RoleName;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonValue
     @Enumerated(EnumType.STRING)
     private RoleName name;
 
