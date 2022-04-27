@@ -6,7 +6,9 @@ import com.airbrasil.apirest.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,8 +41,9 @@ public class RoleController {
 
     @ApiOperation(value="Cria uma Função")
     @PostMapping
-    public Role create(@RequestBody RoleRequest roleRequest) {
-        return roleService.create(roleRequest);
+    public ResponseEntity create(@RequestBody RoleRequest roleRequest) {
+        roleService.create(roleRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Função criada com sucesso");
     }
 
     @ApiOperation(value="Altera uma Função")

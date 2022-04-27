@@ -8,9 +8,11 @@ import com.airbrasil.apirest.enums.RoleName;
 import com.airbrasil.apirest.repository.RoleRepository;
 import com.airbrasil.apirest.repository.TicketRepository;
 import com.airbrasil.apirest.repository.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,17 +52,17 @@ public class TicketService {
 
     public Ticket create( TicketRequest createRequest) {
 
-            Ticket ticket = new Ticket();
-            ticket.setPassager(createRequest.getPassager());
-            ticket.setCpf(createRequest.getCpf());
-            ticket.setOrigin(createRequest.getOrigin());
-            ticket.setDestiny(createRequest.getDestiny());
-            ticket.setPrice(createRequest.getPrice());
-            ticket.setDataIda(createRequest.getDataIda());
-            ticket.setDataVolta(createRequest.getDataVolta());
-            ticket.setUserId(createRequest.getUserId());
+        Ticket ticket = new Ticket();
+        ticket.setPassager(createRequest.getPassager());
+        ticket.setCpf(createRequest.getCpf());
+        ticket.setOrigin(createRequest.getOrigin());
+        ticket.setDestiny(createRequest.getDestiny());
+        ticket.setPrice(createRequest.getPrice());
+        ticket.setDataIda(createRequest.getDataIda());
+        ticket.setDataVolta(createRequest.getDataVolta());
+        ticket.setUserId(createRequest.getUserId());
 
-            return ticketRepository.save(ticket);
+        return ticketRepository.save(ticket);
     }
 
     public Ticket update(TicketUpdateRequest ticketUpdateRequest, Long id) {

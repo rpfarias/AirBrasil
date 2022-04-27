@@ -48,7 +48,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity createUser(@RequestBody UserRequest user) {
         userService.createUser(user);
-        return ResponseEntity.ok().body("User criado com sucesso");
+        return ResponseEntity.status(HttpStatus.CREATED).body("User criado com sucesso");
     }
 
     @ApiOperation(value = "Atualiza um Usuário")

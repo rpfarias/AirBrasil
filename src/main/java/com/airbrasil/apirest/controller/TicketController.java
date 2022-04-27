@@ -7,7 +7,9 @@ import com.airbrasil.apirest.service.TicketService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -61,10 +63,17 @@ public class TicketController {
         return ticketService.findAllByPassager(passager);
     }
 
+//    @ApiOperation(value = "Cria uma Passagem")
+//    @PostMapping
+//    public Ticket create(@RequestBody @Valid TicketRequest ticket) {
+//        return ticketService.create(ticket);
+//    }
+
     @ApiOperation(value = "Cria uma Passagem")
     @PostMapping
-    public Ticket create(@RequestBody @Valid TicketRequest ticket) {
-        return ticketService.create(ticket);
+    public ResponseEntity create(@RequestBody @Valid TicketRequest ticket) {
+        ticketService.create(ticket);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Ticket criado com sucesso");
     }
 
     @ApiOperation(value = "Altera uma Passagem")
