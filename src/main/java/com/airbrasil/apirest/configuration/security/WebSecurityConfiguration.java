@@ -49,7 +49,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/users").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/tickets").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/routes").permitAll()
+
+                .antMatchers(HttpMethod.POST, "/api/routes/**").hasAnyRole("ADMIN", "THANOS")
+                .antMatchers(HttpMethod.PUT, "/api/routes/**").hasAnyRole("ADMIN", "THANOS")
+                .antMatchers(HttpMethod.DELETE, "/api/routes/**").hasAnyRole("ADMIN", "THANOS")
 
                 .antMatchers(HttpMethod.GET, "/api/users/**").hasAnyRole("ADMIN", "THANOS")
                 .antMatchers(HttpMethod.PUT, "/api/users/**").hasAnyRole("ADMIN", "THANOS")
@@ -62,14 +66,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.POST, "/api/tickets").hasAnyRole("ADMIN", "USER", "THANOS")
                 .antMatchers(HttpMethod.GET, "/api/tickets/**").hasAnyRole("ADMIN", "THANOS")
-                .antMatchers(HttpMethod.GET, "/api/tickets").hasRole("USER")
                 .antMatchers(HttpMethod.PUT, "/api/tickets/**").hasAnyRole("ADMIN", "THANOS")
                 .antMatchers(HttpMethod.DELETE, "/api/tickets").hasAnyRole("ADMIN", "USER", "THANOS")
-
-//                .antMatchers(HttpMethod.GET, "/api/tickets/origin").hasRole("USER")
-//                .antMatchers(HttpMethod.GET, "/api/tickets/destiny").hasRole("USER")
-//                .antMatchers(HttpMethod.GET, "/api/tickets/passager").hasRole("USER")
-//                .antMatchers(HttpMethod.GET, "/api/tickets/cpf").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/api/tickets/passager").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/api/tickets/cpf").hasRole("USER")
                 .anyRequest().authenticated()
                 .and().httpBasic();
     }

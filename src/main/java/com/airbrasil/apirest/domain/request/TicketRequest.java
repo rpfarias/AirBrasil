@@ -42,8 +42,8 @@ public class TicketRequest {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dataVolta;
 
-    @Column(name = "preco")
-    private BigDecimal price;
+//    @Column(name = "preco")
+//    private BigDecimal price;
 
     @Column(name = "user_id")
     private Long userId;

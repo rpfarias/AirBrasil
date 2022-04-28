@@ -20,7 +20,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    final UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;

@@ -52,12 +52,51 @@ public class TicketService {
 
     public Ticket create( TicketRequest createRequest) {
 
+//        BigDecimal valor;
+
         Ticket ticket = new Ticket();
         ticket.setPassager(createRequest.getPassager());
         ticket.setCpf(createRequest.getCpf());
         ticket.setOrigin(createRequest.getOrigin());
         ticket.setDestiny(createRequest.getDestiny());
-        ticket.setPrice(createRequest.getPrice());
+
+        if (ticket.getOrigin().equals("Paris") && ticket.getDestiny().equals("Bogotá")) {
+            ticket.setPrice(BigDecimal.valueOf(1100));
+        } else if (ticket.getOrigin().equals("Krakovia") && ticket.getDestiny().equals("Gothan")) {
+            ticket.setPrice(BigDecimal.valueOf(2150.10));
+        } else if (ticket.getOrigin().equals("Paris") && ticket.getDestiny().equals("Gothan City")) {
+            ticket.setPrice(BigDecimal.valueOf(5800.00));
+        } else if (ticket.getOrigin().equals("Dublin") && ticket.getDestiny().equals("Bogotá")) {
+            ticket.setPrice(BigDecimal.valueOf(3850.99));
+        } else if (ticket.getOrigin().equals("Bankok") && ticket.getDestiny().equals("Salvador")) {
+            ticket.setPrice(BigDecimal.valueOf(4690.99));
+        } else if (ticket.getOrigin().equals("Rio de Janeiro") && ticket.getDestiny().equals("São Paulo")) {
+            ticket.setPrice(BigDecimal.valueOf(350.99));
+        } else if (ticket.getOrigin().equals("Salvador") && ticket.getDestiny().equals("São Paulo")) {
+            ticket.setPrice(BigDecimal.valueOf(475.99));
+        } else if (ticket.getOrigin().equals("Roma") && ticket.getDestiny().equals("Florianópolis")) {
+            ticket.setPrice(BigDecimal.valueOf(2990.99));
+        } else if (ticket.getOrigin().equals("Florianópolis") && ticket.getDestiny().equals("Roma")) {
+            ticket.setPrice(BigDecimal.valueOf(2950.99));
+        } else if (ticket.getOrigin().equals("Vitória") && ticket.getDestiny().equals("Goiânia")) {
+            ticket.setPrice(BigDecimal.valueOf(220.99));
+        } else if (ticket.getOrigin().equals("Recife") && ticket.getDestiny().equals("Porto Velho")) {
+            ticket.setPrice(BigDecimal.valueOf(450.99));
+        } else if (ticket.getOrigin().equals("Palmas") && ticket.getDestiny().equals("Boa Vista")) {
+            ticket.setPrice(BigDecimal.valueOf(850.99));
+        } else if (ticket.getOrigin().equals("Porto Alegre") && ticket.getDestiny().equals("Teresina")) {
+            ticket.setPrice(BigDecimal.valueOf(280.99));
+        } else if (ticket.getOrigin().equals("Belém") && ticket.getDestiny().equals("Recife")) {
+            ticket.setPrice(BigDecimal.valueOf(350.99));
+        } else if (ticket.getOrigin().equals("Campo Grande") && ticket.getDestiny().equals("Brasília")) {
+            ticket.setPrice(BigDecimal.valueOf(150.99));
+        } else if (ticket.getOrigin().equals("São Paulo") && ticket.getDestiny().equals("Salvador")) {
+            ticket.setPrice(BigDecimal.valueOf(699.99));
+        } else if (ticket.getOrigin().equals("São Paulo") && ticket.getDestiny().equals("Rio de Janeiro")) {
+            ticket.setPrice(BigDecimal.valueOf(199.99));
+        }
+
+
         ticket.setDataIda(createRequest.getDataIda());
         ticket.setDataVolta(createRequest.getDataVolta());
         ticket.setUserId(createRequest.getUserId());
@@ -80,7 +119,7 @@ public class TicketService {
         return ticketRepository.save(oldTicket);
     }
 
-    public void deleteById( Long id) {
+    public void deleteById(Long id) {
         ticketRepository.deleteById(id);
     }
 }
