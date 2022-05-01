@@ -2,6 +2,7 @@ package com.airbrasil.apirest.controller;
 
 import com.airbrasil.apirest.domain.model.User;
 import com.airbrasil.apirest.domain.request.UserRequest;
+import com.airbrasil.apirest.domain.request.UserRoleUpdateRequest;
 import com.airbrasil.apirest.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -57,9 +58,21 @@ public class UserController {
         return userService.update(userRequest, id);
     }
 
+    @ApiOperation(value = "Cria permissão no Usuário")
+    @PostMapping("/role/{id}")
+    public User createRoleUser(@PathVariable Long id, @RequestBody @Valid UserRoleUpdateRequest userRequest) {
+        return userService.createRoleUser(userRequest, id);
+    }
+
     @ApiOperation(value = "Deleta um Usuário")
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         userService.deleteById(id);
+    }
+
+    @ApiOperation(value = "Atualiza permissão do Usuário")
+    @PutMapping("/role/{id}")
+    public void deleteRoleUser(@PathVariable Long id, @RequestBody UserRoleUpdateRequest userRequest) {
+        userService.deleteRoleUser(userRequest, id);
     }
 }

@@ -1,7 +1,9 @@
 package com.airbrasil.apirest.service;
 
+import com.airbrasil.apirest.domain.model.Role;
 import com.airbrasil.apirest.domain.model.User;
 import com.airbrasil.apirest.domain.request.UserRequest;
+import com.airbrasil.apirest.domain.request.UserRoleUpdateRequest;
 import com.airbrasil.apirest.enums.RoleName;
 import com.airbrasil.apirest.repository.RoleRepository;
 import com.airbrasil.apirest.repository.UserRepository;
@@ -52,19 +54,38 @@ public class UserService {
             role.ifPresent(value -> user.getRoles().add(value));
             return userRepository.save(user);
         } else
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("CPF { %s } já cadastrado.", request.getCpf()));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    String.format("CPF { %s } já cadastrado.", request.getCpf()));
     }
 
     public User update(UserRequest request, Long id) {
+
         User oldUser = userRepository.getById(id);
         oldUser.setUsername(request.getUsername());
         oldUser.setPassword(new BCryptPasswordEncoder().encode(request.getPassword()));
         oldUser.setCpf(request.getCpf());
         oldUser.setName(request.getName());
+
         return userRepository.save(oldUser);
+    }
+
+    public User createRoleUser(UserRoleUpdateRequest userRequest, Long id) {
+        Optional<Role> rolerOptional = roleRepository.findByName(userRequest.getRoleName());
+
+                User user = this.findById(id);
+                user.getRoles().add(rolerOptional.get());
+                return userRepository.save(user);
     }
 
     public void deleteById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public void deleteRoleUser(UserRoleUpdateRequest userRequest, Long id) {
+
+        User user = this.findById(id);
+        user.getRoles().removeIf(role -> role.getName().equals(userRequest.getRoleName()));
+
+        userRepository.saveAndFlush(user);
     }
 }

@@ -2,7 +2,6 @@ package com.airbrasil.apirest.service;
 
 import com.airbrasil.apirest.domain.model.Role;
 import com.airbrasil.apirest.domain.request.RoleRequest;
-import com.airbrasil.apirest.enums.RoleName;
 import com.airbrasil.apirest.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

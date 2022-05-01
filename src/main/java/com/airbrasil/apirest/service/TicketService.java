@@ -1,40 +1,36 @@
 package com.airbrasil.apirest.service;
 
 import com.airbrasil.apirest.domain.model.Ticket;
-import com.airbrasil.apirest.domain.model.User;
 import com.airbrasil.apirest.domain.request.TicketRequest;
 import com.airbrasil.apirest.domain.request.TicketUpdateRequest;
-import com.airbrasil.apirest.enums.RoleName;
-import com.airbrasil.apirest.repository.RoleRepository;
 import com.airbrasil.apirest.repository.TicketRepository;
 import com.airbrasil.apirest.repository.UserRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TicketService {
 
     private final TicketRepository ticketRepository;
-
     private final UserRepository userRepository;
-//    private final RoleRepository roleRepository;
+    TicketRequest ticketRequest;
 
     public TicketService(TicketRepository ticketRepository, UserRepository userRepository) {
         this.ticketRepository = ticketRepository;
         this.userRepository = userRepository;
-//        this.roleRepository = roleRepository;
     }
 
     public List<Ticket> findAll() {
         return ticketRepository.findAll();
     }
 
-    public List<Ticket> findByUserId(Long userId) { return ticketRepository.findByUserId(userId); }
+    public List<Ticket> findByUserId(Long userId) {
+        return ticketRepository.findByUserId(userId);
+    }
 
     public List<Ticket> ticketByCpf( String cpf) { return ticketRepository.findByCpf(cpf); }
 
@@ -42,17 +38,13 @@ public class TicketService {
         return ticketRepository.findByDestiny(destiny);
     }
 
-    public List<Ticket> findByOrigin( String origin) {
-        return ticketRepository.findByOrigin(origin);
-    }
+    public List<Ticket> findByOrigin( String origin) { return ticketRepository.findByOrigin(origin); }
 
     public List<Ticket> findAllByPassager( String passager) {
         return ticketRepository.findByPassager(passager);
     }
 
     public Ticket create( TicketRequest createRequest) {
-
-//        BigDecimal valor;
 
         Ticket ticket = new Ticket();
         ticket.setPassager(createRequest.getPassager());
@@ -94,7 +86,8 @@ public class TicketService {
             ticket.setPrice(BigDecimal.valueOf(699.99));
         } else if (ticket.getOrigin().equals("São Paulo") && ticket.getDestiny().equals("Rio de Janeiro")) {
             ticket.setPrice(BigDecimal.valueOf(199.99));
-        }
+        } else
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
 
         ticket.setDataIda(createRequest.getDataIda());
@@ -122,4 +115,5 @@ public class TicketService {
     public void deleteById(Long id) {
         ticketRepository.deleteById(id);
     }
+
 }

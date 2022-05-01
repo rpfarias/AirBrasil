@@ -35,8 +35,7 @@ public class TicketController {
 
     @ApiOperation(value = "Retorna uma lista de Ticket por UserId")
     @GetMapping("/userId/{userId}")
-    public List<Ticket> findByUserId(@PathVariable Long userId) {
-        return ticketService.findByUserId(userId);
+    public List<Ticket> findByUserId(@PathVariable Long userId) { return ticketService.findByUserId(userId);
     }
 
     @ApiOperation(value = "Retorna um Ticket por CPF")
@@ -62,12 +61,6 @@ public class TicketController {
     public List<Ticket> findAllByPassager(@PathVariable String passager) {
         return ticketService.findAllByPassager(passager);
     }
-
-//    @ApiOperation(value = "Cria uma Passagem")
-//    @PostMapping
-//    public Ticket create(@RequestBody @Valid TicketRequest ticket) {
-//        return ticketService.create(ticket);
-//    }
 
     @ApiOperation(value = "Cria uma Passagem")
     @PostMapping
